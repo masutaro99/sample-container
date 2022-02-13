@@ -12,6 +12,7 @@ phases:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo Logging in to Docker Hub...
       - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - IMAGE = "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO:$IMAGE_TAG"
   build:
     commands:
       - echo Build started on `date`
@@ -23,7 +24,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      - printf '[{"name":"example","imageUri":"%s"}]' $IMAGE > imagedefinitions.json
+      - printf '[{"name":"sample-container","imageUri":"%s"}]' $IMAGE > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json 
