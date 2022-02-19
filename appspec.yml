@@ -5,6 +5,6 @@ Resources:
       Properties:
         TaskDefinition: <TASK_DEFINITION>
         LoadBalancerInfo:
-          ContainerName: "<CONTAINER_NAME>"
+          ContainerName: "sample-container"
           ContainerPort: 80
         PlatformVersion: "1.4.0"
