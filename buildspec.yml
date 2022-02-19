@@ -27,5 +27,7 @@ phases:
       # - printf '[{"name":"sample-container","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
-  files: taskdef.json
+  files:
+    - taskdef.json
+    - appspec.yml
   # files: imagedefinitions.json 
