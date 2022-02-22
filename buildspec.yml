@@ -12,6 +12,7 @@ phases:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo Logging in to Docker Hub...
       - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION}
   build:
     commands:
       - echo Build started on `date`
@@ -25,10 +26,8 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION_ARN --query taskDefinition | jq '.containerDefinitions[0].image="<IMAGE1_NAME>"' > taskdef.json
       - printf '{"Version":"1.0","ImageURI":"%s"}' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imageDetail.json
-      # - printf '[{"name":"sample-container","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files:
     - taskdef.json
     - imageDetail.json
-  # files: imagedefinitions.json 
