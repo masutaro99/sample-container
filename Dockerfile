@@ -12,6 +12,4 @@ ENV CGO_ENABLED=0 \
   GOARCH=amd64
 EXPOSE 80
 
-LABEL org.opencontainers.image.authors="Kentaro Masukawa <kentaro.masukawa@mail>"
-
 CMD ["go", "run", "server.go"]
