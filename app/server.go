@@ -3,13 +3,15 @@ package main
 import (
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World")
+	engine := gin.Default()
+	engine.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "hello world",
+		})
 	})
-	e.Logger.Fatal(e.Start(":80"))
+	engine.Run(":80")
 }
