@@ -6,13 +6,6 @@ env:
     DOCKERHUB_PASS: arn:aws:secretsmanager:$AWS_DEFAULT_REGION:$AWS_ACCOUNT_ID:secret:docker-hub-kctvuo:DOCKERHUB_PASS
 
 phases:
-  # install:
-  #   commands:
-  #     - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
-  #     - pip3 install typing
-  #     - pip3 install awscli --force-reinstall --upgrade
-  #     - wget --quiet https://aqua-binary.s3.amazonaws.com/scannercli
-  #     - chmod +x scannercli
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -26,7 +19,6 @@ phases:
       - echo Building the Docker image...          
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      # - ./scannercli scan --host $AQUA_URL --user $AQUA_USER --password $AQUA_PASSWORD --local $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG --no-verify --htmlfile aqua.html
   post_build:
     commands:
       - echo Build completed on `date`
@@ -39,4 +31,3 @@ artifacts:
   files:
     - taskdef.json
     - imageDetail.json
-    # - aqua.html
