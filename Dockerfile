@@ -12,4 +12,4 @@ ENV CGO_ENABLED=0 \
   GOARCH=amd64
 EXPOSE 80
 
-CMD ["go", "run", "server.go"]
+ENTRYPOINT ["go", "run", "server.go"]
